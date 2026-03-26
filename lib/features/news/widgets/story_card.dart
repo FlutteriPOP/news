@@ -1,110 +1,306 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../../core/routes/app_pages.dart';
 import '../../../../core/utils/string_utils.dart';
 import '../../../../core/utils/time_formatter.dart';
 import '../models/story.dart';
+import '../utils/story_navigation_utils.dart';
 
 class StoryCard extends StatelessWidget {
   const StoryCard({required this.story, super.key});
   final Story story;
 
+  /// Handles navigation when the story card is tapped
+  void _handleStoryTap(BuildContext context) {
+    StoryNavigationUtils.handleStoryTap(story, context);
+  }
+
+  /// Shows context menu with additional options
+  void _showContextMenu(BuildContext context) {
+    StoryNavigationUtils.showContextMenu(story, context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final timeAgo = TimeFormatter.formatRelative(story.dateTime);
+    final navigationHint = StoryNavigationUtils.getNavigationHint(story);
+    final hasComments = StoryNavigationUtils.hasComments(story);
 
-    return ShadCard(
-      child: InkWell(
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        color: ShadTheme.of(context).colorScheme.card,
         borderRadius: BorderRadius.circular(12),
-        onTap: () {
-          Get.toNamed(Routes.NEWS_DETAIL, arguments: story);
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              story.title,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 12),
-            if (story.url != null) ...[
-              Row(
-                children: [
-                  Icon(
-                    Icons.link,
-                    size: 16,
-                    color: Theme.of(context).colorScheme.outline,
+        border: Border.all(color: ShadTheme.of(context).colorScheme.border),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => _handleStoryTap(context),
+          onLongPress: () => _showContextMenu(context),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Title with better typography
+                Text(
+                  story.title,
+                  style: ShadTheme.of(context).textTheme.h4.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    height: 1.4,
+                    color: ShadTheme.of(context).colorScheme.foreground,
                   ),
-                  const SizedBox(width: 4),
-                  Expanded(
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                // Navigation hint with better styling
+                if (navigationHint.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: ShadTheme.of(
+                        context,
+                      ).colorScheme.primary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
                     child: Text(
-                      StringUtils.extractDomain(story.url!),
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.outline,
+                      navigationHint,
+                      style: ShadTheme.of(context).textTheme.muted.copyWith(
+                        color: ShadTheme.of(context).colorScheme.primary,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(height: 12),
-            ],
-            Row(
-              children: [
-                ShadBadge(child: Text('${story.score} points')),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.person,
-                        size: 16,
-                        color: Theme.of(context).colorScheme.outline,
+
+                const SizedBox(height: 12),
+
+                // URL section with better design
+                if (story.url != null) ...[
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: ShadTheme.of(
+                        context,
+                      ).colorScheme.muted.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          LucideIcons.link,
+                          size: 14,
+                          color: ShadTheme.of(context).colorScheme.primary,
+                        ),
+                        const SizedBox(width: 6),
+                        Flexible(
+                          child: Text(
+                            StringUtils.extractDomain(story.url!),
+                            style: ShadTheme.of(context).textTheme.muted
+                                .copyWith(
+                                  color: ShadTheme.of(
+                                    context,
+                                  ).colorScheme.primary,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                ],
+
+                // Metadata section with better layout
+                Row(
+                  children: [
+                    // Score badge with improved design
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
                       ),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: Text(
-                          story.author,
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(
-                                color: Theme.of(context).colorScheme.outline,
-                              ),
-                          overflow: TextOverflow.ellipsis,
+                      decoration: BoxDecoration(
+                        color: hasComments
+                            ? ShadTheme.of(
+                                context,
+                              ).colorScheme.primary.withOpacity(0.1)
+                            : ShadTheme.of(
+                                context,
+                              ).colorScheme.muted.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            LucideIcons.arrowUp,
+                            size: 12,
+                            color: hasComments
+                                ? ShadTheme.of(context).colorScheme.primary
+                                : ShadTheme.of(
+                                    context,
+                                  ).colorScheme.mutedForeground,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            story.score.toString(),
+                            style: ShadTheme.of(context).textTheme.muted
+                                .copyWith(
+                                  color: hasComments
+                                      ? ShadTheme.of(
+                                          context,
+                                        ).colorScheme.primary
+                                      : ShadTheme.of(
+                                          context,
+                                        ).colorScheme.mutedForeground,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(width: 12),
+
+                    // Author info
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Icon(
+                            LucideIcons.user,
+                            size: 14,
+                            color: ShadTheme.of(
+                              context,
+                            ).colorScheme.mutedForeground,
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              story.author,
+                              style: ShadTheme.of(context).textTheme.muted
+                                  .copyWith(
+                                    color: ShadTheme.of(
+                                      context,
+                                    ).colorScheme.mutedForeground,
+                                    fontSize: 12,
+                                  ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(width: 12),
+
+                    // Comments badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: hasComments
+                            ? ShadTheme.of(
+                                context,
+                              ).colorScheme.secondary.withOpacity(0.1)
+                            : ShadTheme.of(
+                                context,
+                              ).colorScheme.muted.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          color: hasComments
+                              ? ShadTheme.of(
+                                  context,
+                                ).colorScheme.secondary.withOpacity(0.3)
+                              : ShadTheme.of(context).colorScheme.border,
                         ),
                       ),
-                    ],
-                  ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            LucideIcons.messageCircle,
+                            size: 12,
+                            color: hasComments
+                                ? ShadTheme.of(context).colorScheme.secondary
+                                : ShadTheme.of(
+                                    context,
+                                  ).colorScheme.mutedForeground,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            story.commentsCount.toString(),
+                            style: ShadTheme.of(context).textTheme.muted
+                                .copyWith(
+                                  color: hasComments
+                                      ? ShadTheme.of(
+                                          context,
+                                        ).colorScheme.secondary
+                                      : ShadTheme.of(
+                                          context,
+                                        ).colorScheme.mutedForeground,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                ShadBadge.outline(
-                  child: Text('${story.commentsCount} comments'),
+
+                const SizedBox(height: 8),
+
+                // Time info with subtle styling
+                Row(
+                  children: [
+                    Icon(
+                      LucideIcons.clock,
+                      size: 12,
+                      color: ShadTheme.of(
+                        context,
+                      ).colorScheme.mutedForeground.withOpacity(0.7),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      timeAgo,
+                      style: ShadTheme.of(context).textTheme.muted.copyWith(
+                        color: ShadTheme.of(
+                          context,
+                        ).colorScheme.mutedForeground.withOpacity(0.7),
+                        fontSize: 11,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Icon(
-                  Icons.schedule,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.outline,
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  timeAgo,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
-                ),
-              ],
-            ),
-          ],
+          ),
         ),
       ),
     );

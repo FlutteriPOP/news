@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
 class AppLoader extends StatelessWidget {
   const AppLoader({super.key, this.message, this.fullScreen = false});
@@ -12,10 +11,21 @@ class AppLoader extends StatelessWidget {
     final loader = Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const CircularProgressIndicator(),
+        const SizedBox(
+          width: 24,
+          height: 24,
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6366F1)),
+          ),
+        ),
         if (message != null) ...[
           const SizedBox(height: 12),
-          Text(message!, style: const TextStyle(fontSize: 14)),
+          Text(
+            message!,
+            style: const TextStyle(fontSize: 14, color: Color(0xFF64748B)),
+            textAlign: TextAlign.center,
+          ),
         ],
       ],
     );
@@ -25,12 +35,9 @@ class AppLoader extends StatelessWidget {
     }
 
     return Container(
-      color: Colors.black.withOpacity(0.2),
+      color: Colors.black.withOpacity(0.05),
       alignment: Alignment.center,
-      child: ShadCard(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: loader,
-      ),
+      child: loader,
     );
   }
 }

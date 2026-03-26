@@ -26,6 +26,10 @@ analyzer:
     prefer_expression_function_bodies: ignore
     deprecated_member_use: ignore
 
+    # 🚫 GetX specific rules to ignore
+    invalid_annotation_target: ignore
+    avoid_dynamic_calls: ignore
+
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"

@@ -1,10 +1,11 @@
 name: whack
-description: A production-ready Hacker News client.
+description: A production-ready Hacker News client built with Flutter and GetX.
 publish_to: 'none'
 version: 0.1.0+1
 
 environment:
   sdk: ">=3.11.0 <4.0.0"
+  flutter: ">=3.11.0"
 
 dependencies:
   flutter:
@@ -16,28 +17,20 @@ dependencies:
   # Network
   dio: ^5.9.2
 
-  # Connectivity
-  connectivity_plus: ^7.0.0
-
-  # Responsive UI
-  flutter_screenutil: ^5.9.3
-
   # JSON
   json_annotation: ^4.11.0
 
   # Utilities
   url_launcher: ^6.3.2
   intl: ^0.20.2
-  equatable: ^2.0.8
+  share_plus: ^7.2.2
 
   # UI / Rendering
   flutter_html: ^3.0.0
-  cached_network_image: ^3.4.1
 
   # Env config
   flutter_dotenv: ^6.0.0
   shadcn_ui: ^0.52.3
-  dartz: ^0.10.1
 
 dev_dependencies:
   flutter_test:

@@ -39,15 +39,15 @@ A modern, feature-rich Flutter application for browsing Hacker News stories with
 
 ### 🏗️ **Architecture**
 - **Clean Architecture** with proper separation of concerns
-- **Riverpod State Management** for reactive UI
+- **GetX State Management** for reactive UI and dependency injection
 - **Type Safety** with enums and strong typing
-- **Error Handling** with Either pattern from Dartz
+- **Error Handling** with proper error states and user feedback
 - **Modular Design** for easy maintenance and scaling
 
 ## Getting Started
 
 ### Prerequisites
-- Flutter SDK (>=3.3.0)
+- Flutter SDK (>=3.11.0)
 - Dart SDK compatible with Flutter version
 
 ### Installation
@@ -86,40 +86,31 @@ flutter build web
 ```
 lib/
 ├── core/
-│   ├── error/           # Error handling utilities
+│   ├── controllers/     # Base controllers
 │   ├── network/        # Network client (Dio)
-│   └── theme/          # App theming
+│   ├── routes/         # App routing
+│   ├── utils/          # Utility functions
+│   └── widgets/        # Core widgets
 ├── features/
-│   └── news/
-│       ├── data/
-│       │   ├── datasources/    # API data sources
-│       │   ├── models/         # Data models
-│       │   └── repository/    # Repository implementations
-│       ├── domain/
-│       │   ├── entities/       # Business entities
-│       │   └── repositories/   # Repository interfaces
-│       └── presentation/
-│           ├── providers/      # Riverpod providers
-│           ├── screens/        # UI screens
-│           └── widgets/        # Reusable widgets
+│   ├── comments/       # Comments feature
+│   └── news/           # News feature
+│       ├── controllers/    # News controllers
+│       ├── models/         # Data models
+│       ├── screens/        # UI screens
+│       └── widgets/        # Feature widgets
 └── main.dart
 ```
 
 ## Key Dependencies
 
-- **flutter_riverpod**: State management
+- **get**: State management, dependency injection, and routing
 - **dio**: HTTP client for API calls
-- **google_fonts**: Typography
+- **shadcn_ui**: Modern UI components
+- **flutter_html**: HTML rendering for story content
 - **intl**: Date formatting
-- **freezed**: Code generation for models
-- **dartz**: Functional programming utilities
-
-## API Integration
-
-This app uses the official Hacker News API:
-- Base URL: `https://hacker-news.firebaseio.com/v0/`
-- Endpoints for different story types
-- Real-time data fetching
+- **url_launcher**: Launch URLs in external apps
+- **flutter_dotenv**: Environment variable management
+- **json_annotation**: JSON serialization
 
 ## Contributing
 

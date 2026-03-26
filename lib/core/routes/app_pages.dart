@@ -10,17 +10,38 @@ import '../../features/news/screens/news_screen.dart';
 
 part 'app_routes.dart';
 
+/// Application pages and routing configuration.
+///
+/// This class defines all the application routes using GetX navigation.
+/// Each route is configured with:
+/// - A unique name/path
+/// - The corresponding page/widget
+/// - The dependency injection binding
+///
+/// This approach provides type-safe navigation and proper
+/// dependency management throughout the application.
 class AppPages {
   AppPages._();
 
+  /// The initial route when the app starts
   static const INITIAL = Routes.HOME;
 
+  /// List of all application routes
+  ///
+  /// Each GetPage defines:
+  /// - [name]: The route path
+  /// - [page]: The widget to display
+  /// - [binding]: The dependency injection binding for this route
   static final routes = [
+    // Home/News screen route
     GetPage(
       name: _Paths.HOME,
       page: () => const NewsScreen(),
       binding: NewsBinding(),
     ),
+
+    // News detail screen route
+    // Expects a Story object as navigation argument
     GetPage(
       name: _Paths.NEWS_DETAIL,
       page: () {

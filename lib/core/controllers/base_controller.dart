@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 class BaseController extends GetxController {
   final RxBool isLoading = false.obs;
@@ -10,7 +12,11 @@ class BaseController extends GetxController {
   void setError(String message) {
     errorMessage.value = message;
     if (message.isNotEmpty) {
-      Get.snackbar('Error', message, snackPosition: SnackPosition.BOTTOM);
+      ShadAlert.destructive(
+        icon: const Icon(LucideIcons.circleAlert),
+        title: const Text('Error'),
+        description: Text(message),
+      );
     }
   }
 

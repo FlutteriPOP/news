@@ -1,34 +1,56 @@
 name: whack
-description: "A production-ready Hacker News client."
+description: A production-ready Hacker News client.
 publish_to: 'none'
 version: 0.1.0+1
 
 environment:
-  sdk: '>=3.11.0 <4.0.0'
+  sdk: ">=3.11.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_riverpod: ^3.3.1
+
+  # State management + DI + routing
+  get: ^4.7.3
+
+  # Network
   dio: ^5.9.2
-  freezed_annotation: ^3.1.0
+
+  # Connectivity
+  connectivity_plus: ^7.0.0
+
+  # Responsive UI
+  flutter_screenutil: ^5.9.3
+
+  # JSON
   json_annotation: ^4.11.0
+
+  # Utilities
   url_launcher: ^6.3.2
-  dartz: ^0.10.1
-  flutter_widget_from_html: ^0.17.1
   intl: ^0.20.2
   equatable: ^2.0.8
-  shadcn_ui: ^0.52.3
-  flutter_lints: ^6.0.0
+
+  # UI / Rendering
+  flutter_html: ^3.0.0
+  cached_network_image: ^3.4.1
+
+  # Env config
   flutter_dotenv: ^6.0.0
+  shadcn_ui: ^0.52.3
+  dartz: ^0.10.1
 
 dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+  # Code generation
   build_runner: ^2.13.1
-  freezed: ^3.2.5
-  json_serializable: ^6.13.0
-  riverpod_generator: ^4.0.3
+  json_serializable: ^6.13.1
 
 flutter:
   uses-material-design: true
+
   assets:
     - .env

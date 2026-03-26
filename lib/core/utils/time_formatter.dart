@@ -37,3 +37,9 @@ class TimeFormatter {
     }
   }
 }
+
+class DateTimeUtils {
+  static DateTime fromUnix(int timestamp) {
+    return DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+  }
+}

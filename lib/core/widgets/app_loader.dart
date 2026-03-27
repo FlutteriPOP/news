@@ -8,22 +8,27 @@ class AppLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final loader = Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SizedBox(
-          width: 24,
-          height: 24,
+        SizedBox(
+          width: 40,
+          height: 40,
           child: CircularProgressIndicator(
-            strokeWidth: 2,
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6366F1)),
+            strokeWidth: 3,
+            valueColor: AlwaysStoppedAnimation<Color>(
+              theme.colorScheme.primary,
+            ),
           ),
         ),
         if (message != null) ...[
           const SizedBox(height: 12),
           Text(
             message!,
-            style: const TextStyle(fontSize: 14, color: Color(0xFF64748B)),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -35,7 +40,7 @@ class AppLoader extends StatelessWidget {
     }
 
     return Container(
-      color: Colors.black.withOpacity(0.05),
+      color: theme.colorScheme.surface.withOpacity(0.8),
       alignment: Alignment.center,
       child: loader,
     );

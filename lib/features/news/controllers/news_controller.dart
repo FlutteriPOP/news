@@ -97,9 +97,9 @@ class NewsController extends BaseController
     await fetchStories();
   }
 
-  Future<void> changeStoryType(StoryType newType) async {
-    if (currentStoryType.value == newType) return;
-    currentStoryType.value = newType;
-    await fetchStories();
-  }
+  // Future<void> changeStoryType(StoryType newType) async {
+  //   if (currentStoryType.value == newType) return;
+  //   currentStoryType.value = newType;
+  //   await fetchStories();
+  // }
 }

@@ -31,21 +31,32 @@ class CustomTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return TabBar(
       padding: EdgeInsets.zero,
       enableFeedback: false,
       isScrollable: true,
       tabAlignment: TabAlignment.start,
       indicatorSize: TabBarIndicatorSize.label,
-      labelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
-      unselectedLabelStyle: const TextStyle(
+      labelStyle: TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: 13,
+        color: theme.colorScheme.primary,
+      ),
+      unselectedLabelStyle: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: 13,
+        color: theme.colorScheme.onSurface,
       ),
+      indicatorColor: theme.colorScheme.primary,
       controller: tabController,
       tabs: tabs.map((type) {
         return Tab(
-          icon: Icon(_getIconForStoryType(type), size: 16),
+          icon: Icon(
+            _getIconForStoryType(type),
+            size: 16,
+            color: theme.colorScheme.onSurface,
+          ),
           text: type.displayName,
         );
       }).toList(),

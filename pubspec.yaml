@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 0.1.0+1
 
 environment:
-  sdk: ">=3.11.0 <4.0.0"
+  sdk: ">=3.11.3 <4.0.0"
   flutter: ">=3.11.0"
 
 dependencies:
@@ -23,7 +23,7 @@ dependencies:
   # Utilities
   url_launcher: ^6.3.2
   intl: ^0.20.2
-  share_plus: ^7.2.2
+  share_plus: ^12.0.1
 
   # UI / Rendering
   flutter_html: ^3.0.0
@@ -35,11 +35,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^6.0.0
 
-  # Code generation
+  # Testing
   build_runner: ^2.13.1
+
+  # Code generation
   json_serializable: ^6.13.1
 
 flutter:

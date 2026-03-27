@@ -11,11 +11,24 @@ class CommentsController extends BaseController {
   final Dio _dio = Get.find<DioClient>().dio;
 
   final RxList<Comment> comments = <Comment>[].obs;
+  final RxSet<int> expandedComments = <int>{}.obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchComments();
+  }
+
+  void toggleCommentExpansion(int commentId) {
+    if (expandedComments.contains(commentId)) {
+      expandedComments.remove(commentId);
+    } else {
+      expandedComments.add(commentId);
+    }
+  }
+
+  bool isCommentExpanded(int commentId) {
+    return expandedComments.contains(commentId);
   }
 
   Future<void> fetchComments() async {

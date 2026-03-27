@@ -10,16 +10,6 @@ import '../../features/news/screens/news_screen.dart';
 
 part 'app_routes.dart';
 
-/// Application pages and routing configuration.
-///
-/// This class defines all the application routes using GetX navigation.
-/// Each route is configured with:
-/// - A unique name/path
-/// - The corresponding page/widget
-/// - The dependency injection binding
-///
-/// This approach provides type-safe navigation and proper
-/// dependency management throughout the application.
 class AppPages {
   AppPages._();
 

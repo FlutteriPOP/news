@@ -30,7 +30,6 @@ class Comment {
   @JsonKey(includeFromJson: false, includeToJson: false)
   final List<Comment> replies;
 
-  Map<String, dynamic> toJson() => _$CommentToJson(this);
 
   DateTime get dateTime => DateTimeUtils.fromUnix(time);
   String get displayAuthor => author ?? '[deleted]';

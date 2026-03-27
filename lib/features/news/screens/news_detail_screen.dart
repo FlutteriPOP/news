@@ -7,6 +7,7 @@ import '../../../../core/utils/url_launcher_utils.dart';
 import '../../../../core/widgets/error_view.dart';
 import '../../../core/widgets/app_loader.dart';
 import '../../comments/controllers/comments_controller.dart';
+import '../../comments/models/comment.dart';
 import '../../comments/widgets/comment_tree.dart';
 import '../models/story.dart';
 
@@ -68,7 +69,11 @@ class NewsDetailScreen extends GetView<CommentsController> {
                         const SizedBox(height: 16),
                         Row(
                           children: [
-                            const Icon(Icons.schedule, size: 16),
+                            Icon(
+                              Icons.schedule,
+                              size: 16,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                             const SizedBox(width: 6),
                             Text(
                               'Posted ${TimeFormatter.formatRelative(story.dateTime)}',
@@ -135,23 +140,48 @@ class NewsDetailScreen extends GetView<CommentsController> {
               }
 
               if (controller.comments.isEmpty) {
-                return const SliverFillRemaining(
+                return SliverFillRemaining(
                   hasScrollBody: false,
-                  child: Center(child: Text('No comments yet')),
+                  child: Center(
+                    child: Text(
+                      'No comments yet',
+                      style: TextStyle(
+                        color: Theme.of(Get.context!).colorScheme.outline,
+                      ),
+                    ),
+                  ),
                 );
               }
 
               return SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) =>
-                      CommentTree(comment: controller.comments[index]),
-                  childCount: controller.comments.length,
-                ),
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final comment = controller.comments[index];
+                  return _buildCommentTree(comment, controller);
+                }, childCount: controller.comments.length),
               );
             }),
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildCommentTree(
+    Comment comment,
+    CommentsController controller, {
+    int depth = 0,
+  }) {
+    return Obx(() {
+      // Access observable variables to trigger rebuilds
+      final isExpanded = controller.isCommentExpanded(comment.id);
+
+      return CommentTree(
+        comment: comment,
+        depth: depth,
+        isExpanded: isExpanded,
+        onToggleExpanded: () => controller.toggleCommentExpansion(comment.id),
+        controller: controller,
+      );
+    });
   }
 }

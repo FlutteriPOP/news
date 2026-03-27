@@ -29,7 +29,6 @@ class Story {
   final int commentsCount;
   final List<int> kids;
 
-  Map<String, dynamic> toJson() => _$StoryToJson(this);
 
   DateTime get dateTime => DateTimeUtils.fromUnix(time);
 }

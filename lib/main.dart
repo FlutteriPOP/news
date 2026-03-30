@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import 'core/network/dio_client.dart';
-import 'core/routes/app_pages.dart';
+import 'features/bookmarks/services/bookmark_service.dart';
+import 'routes/app_pages.dart';
 
 /// Main entry point for the Whack Hacker News client application.
 ///
@@ -21,6 +22,13 @@ void main() async {
 
   // 2. Initialize DioClient for network requests and make it permanent
   await Get.putAsync(() => DioClient().init(), permanent: true);
+
+  // 3. Initialize BookmarkService as a singleton
+  await Get.putAsync(() async {
+    final service = BookmarkService();
+    await service.onInit();
+    return service;
+  }, permanent: true);
 
   // Run the app with GetX material app and ShadCN UI theming
   runApp(

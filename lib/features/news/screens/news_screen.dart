@@ -4,6 +4,8 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../../core/widgets/app_loader.dart';
 import '../../../../core/widgets/error_view.dart';
+import '../../../core/widgets/app_bar.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/news_controller.dart';
 import '../models/story_type.dart';
 import '../widgets/custom_tab_bar.dart';
@@ -26,36 +28,20 @@ class NewsScreen extends GetView<NewsController> {
       body: SafeArea(
         child: Column(
           children: [
-            // Custom App Bar using ShadCN UI components
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.background,
-                border: Border(
-                  bottom: BorderSide(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.outline.withOpacity(0.2),
-                  ),
+            // Custom App Bar using reusable component
+            AppAppBar(
+              title: 'WHACK',
+              actions: [
+                ShadButton.ghost(
+                  onPressed: () => Get.toNamed(Routes.BOOKMARKS),
+                  child: const Icon(Icons.bookmark),
                 ),
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    'WHACK',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const Spacer(),
-                  ShadButton.ghost(
-                    onPressed: () {
-                      // TODO: Add repository link action
-                    },
-                    child: const Icon(Icons.link),
-                  ),
-                ],
-              ),
+                const SizedBox(width: 8),
+                ShadButton.ghost(
+                  onPressed: () => Get.toNamed(Routes.SETTINGS),
+                  child: const Icon(Icons.settings),
+                ),
+              ],
             ),
 
             // Custom Tab Bar

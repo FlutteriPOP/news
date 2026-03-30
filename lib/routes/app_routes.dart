@@ -15,6 +15,12 @@ abstract class Routes {
 
   /// News detail route for viewing individual stories and comments
   static const NEWS_DETAIL = _Paths.NEWS_DETAIL;
+
+  /// Bookmarks route for viewing saved stories
+  static const BOOKMARKS = _Paths.BOOKMARKS;
+
+  /// Settings route for app configuration
+  static const SETTINGS = _Paths.SETTINGS;
 }
 
 /// Path strings for navigation routes.
@@ -30,4 +36,10 @@ abstract class _Paths {
 
   /// Path for news detail screen with story parameter
   static const NEWS_DETAIL = '/news-detail';
+
+  /// Path for bookmarks screen
+  static const BOOKMARKS = '/bookmarks';
+
+  /// Path for settings screen
+  static const SETTINGS = '/settings';
 }

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
+
 import '../../../../core/utils/time_formatter.dart';
 
 part 'story.g.dart';
@@ -18,6 +21,17 @@ class Story {
 
   factory Story.fromJson(Map<String, dynamic> json) => _$StoryFromJson(json);
 
+  factory Story.fromJsonString(String jsonString) {
+    final jsonData = json.decode(jsonString) as Map<String, dynamic>;
+    return Story.fromJson(jsonData);
+  }
+
+  Map<String, dynamic> toJson() => _$StoryToJson(this);
+
+  String toJsonString() {
+    return json.encode(toJson());
+  }
+
   final int id;
   final String title;
   @JsonKey(name: 'by')
@@ -28,7 +42,6 @@ class Story {
   @JsonKey(name: 'descendants')
   final int commentsCount;
   final List<int> kids;
-
 
   DateTime get dateTime => DateTimeUtils.fromUnix(time);
 }

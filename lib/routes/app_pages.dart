@@ -2,11 +2,15 @@
 
 import 'package:get/get.dart';
 
-import '../../features/comments/bindings/comments_binding.dart';
-import '../../features/news/bindings/news_binding.dart';
-import '../../features/news/models/story.dart';
-import '../../features/news/screens/news_detail_screen.dart';
-import '../../features/news/screens/news_screen.dart';
+import '../features/bookmarks/bindings/bookmarks_binding.dart';
+import '../features/bookmarks/screens/bookmarks_screen.dart';
+import '../features/comments/bindings/comments_binding.dart';
+import '../features/news/bindings/news_binding.dart';
+import '../features/news/models/story.dart';
+import '../features/news/screens/news_detail_screen.dart';
+import '../features/news/screens/news_screen.dart';
+import '../features/settings/bindings/settings_binding.dart';
+import '../features/settings/screens/settings_screen.dart';
 
 part 'app_routes.dart';
 
@@ -39,6 +43,20 @@ class AppPages {
         return NewsDetailScreen(story: story);
       },
       binding: CommentsBinding(),
+    ),
+
+    // Bookmarks screen route
+    GetPage(
+      name: _Paths.BOOKMARKS,
+      page: () => const BookmarksScreen(),
+      binding: BookmarksBinding(),
+    ),
+
+    // Settings screen route
+    GetPage(
+      name: _Paths.SETTINGS,
+      page: () => const SettingsScreen(),
+      binding: SettingsBinding(),
     ),
   ];
 }
